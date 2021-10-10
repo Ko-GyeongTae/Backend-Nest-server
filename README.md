@@ -1,4 +1,4 @@
-# Express Boiler Plate
+# Nest Boiler Plate
 
 ## Nest.js 프레임워크의 boiler plate 제작 프로젝트입니다.
 
