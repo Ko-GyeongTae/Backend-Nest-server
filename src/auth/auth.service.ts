@@ -6,6 +6,7 @@ import { User } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
 import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
+import { VerifyDto } from './dto/verify.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +27,7 @@ export class AuthService {
             id: id,
             password: hashedpassword
         })
-        this.logger.log('admin signup');
+        this.logger.log('[SUCCESS] Admin Signup');
         return {
             message: '회원가입에 성공했습니다.'
         }
@@ -41,12 +42,25 @@ export class AuthService {
         const jwt = await this.jwtService.signAsync({
             id: admin.id
         });
-        this.logger.log('admin login');
+        this.logger.log('[SUCCESS] Admin Login');
         return {
             message: '로그인에 성공했습니다.',
             accessToken: jwt
         }
     }
+
+    async verify(body: VerifyDto) {
+        return {
+            email: body.email
+        }
+    }
+
+    async refresh(req: Request) {
+        return { 
+            req: req.headers
+        }
+    }
+
     //패스워드 동일여부.
     private async verifyPassword(plainPassword: string, hashedpassword: string): Promise<any> {
         const isPasswordMatch = await compare(plainPassword, hashedpassword);
